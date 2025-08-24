@@ -1,16 +1,15 @@
 import { Inter } from "next/font/google";
-import './globals.css'
-// ...existing code...
-import Header from "@/components/Header";
-import { ConvexClientProvider } from "@/components/convex-client-provider";
+import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
+import Header from "@/components/Header";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata = {
-  title: "Mydues",
+  title: "Splitr",
   description: "The smartest way to split expenses with friends",
 };
 
@@ -18,21 +17,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logos/logo-s.png" sizes="any"/>
+        <link rel="icon" href="/logos/logo-s.png" sizes="any" />
       </head>
-      <body
-        className={`${inter.className}`}
-      >
-        <ClerkProvider>
-        <ConvexClientProvider>
+      <body className={`${inter.className}`}>
+        <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        >
+          <ConvexClientProvider>
+            <Header />
+            <main className="min-h-screen">
+              <Toaster richColors />
 
-        
-        <Header />
-        <main className="flex min-h-screen">
-        {children}
-        <Toaster richColors />
-        </main>
-        </ConvexClientProvider>
+              {children}
+            </main>
+          </ConvexClientProvider>
         </ClerkProvider>
       </body>
     </html>
