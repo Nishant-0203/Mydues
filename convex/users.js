@@ -18,7 +18,7 @@ export const store = mutation({
     const user = await ctx.db
       .query("users")
       .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
       )
       .unique();
     if (user !== null) {
@@ -38,29 +38,30 @@ export const store = mutation({
   },
 });
 
+// Get current user
 export const getCurrentUser = query({
   handler: async (ctx) => {
-    // Get the current Clerk identity from auth
     const identity = await ctx.auth.getUserIdentity();
-
     if (!identity) {
       throw new Error("Not authenticated");
     }
 
-    // Query the users table in Convex DB using Clerk user id
     const user = await ctx.db
       .query("users")
       .withIndex("by_token", (q) =>
         q.eq("tokenIdentifier", identity.tokenIdentifier)
       )
       .first();
+
     if (!user) {
-      throw new Error("User not found in database");
+      throw new Error("User not found");
     }
+
     return user;
   },
 });
 
+// Search users by name or email (for adding participants)
 export const searchUsers = query({
   args: {
     query: v.string(),
