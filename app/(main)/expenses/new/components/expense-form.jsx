@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
-import { getAllCategories } from "@/lib/expense-categories";
+import { getAllCategories } from "@/lib/expense-catagories";
 
 // Form schema validation
 const expenseSchema = z.object({
