@@ -6,7 +6,7 @@ import { serve } from "inngest/next";
 export const { GET, POST, PUT } = serve({
   client: inngest,
   functions: [
-    /* your functions will be passed here later! */
+    /* your functions will be passed here later! */ 
     paymentReminders,
     spendingInsights,
   ],
