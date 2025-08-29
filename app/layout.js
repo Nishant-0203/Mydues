@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata = {
-  title: "Splitr",
+  title: "Mydues",
   description: "The smartest way to split expenses with friends",
 };
 
