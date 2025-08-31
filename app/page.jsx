@@ -6,146 +6,7 @@ import Image from "next/image";
 import hero from "@/public/hero.png";
 import { Card } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-
-// Updated features data
-const FEATURES = [
-  {
-    title: "Smart Bill Splitting",
-    Icon: PieChart,
-    bg: "bg-purple-100",
-    color: "text-purple-600",
-    description: "Split bills equally, by percentage, or exact amounts. Perfect for any situation."
-  },
-  {
-    title: "Group Management",
-    Icon: Users,
-    bg: "bg-blue-100",
-    color: "text-blue-600",
-    description: "Create groups with friends, assign roles, and manage expenses together seamlessly."
-  },
-  {
-    title: "Auto Settlements",
-    Icon: CreditCard,
-    bg: "bg-green-100",
-    color: "text-green-600",
-    description: "Track who owes what and settle up with automated payment reminders."
-  },
-  {
-    title: "Smart Reminders",
-    Icon: Bell,
-    bg: "bg-yellow-100",
-    color: "text-yellow-600",
-    description: "Never forget to collect money with gentle email reminders sent automatically."
-  },
-  {
-    title: "AI Insights",
-    Icon: Brain,
-    bg: "bg-indigo-100",
-    color: "text-indigo-600",
-    description: "Get monthly spending insights and smart suggestions powered by AI."
-  },
-  {
-    title: "Secure & Private",
-    Icon: Shield,
-    bg: "bg-red-100",
-    color: "text-red-600",
-    description: "Bank-level security with Clerk authentication keeps your data safe."
-  }
-];
-
-// Updated steps data
-const STEPS = [
-  {
-    label: "1",
-    title: "Create a Group",
-    description: "Add your friends and create a group for your shared expenses. Set roles and permissions easily."
-  },
-  {
-    label: "2", 
-    title: "Add Expenses",
-    description: "Log expenses and choose how to split them - equally, by percentage, or exact amounts."
-  },
-  {
-    label: "3",
-    title: "Settle Up Smart",
-    description: "Get automated reminders and AI insights. Pay back friends without the awkwardness."
-  }
-];
-
-// Pricing data
-const PRICING_PLANS = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Perfect for getting started",
-    features: [
-      "Up to 3 groups",
-      "Basic bill splitting",
-      "Settlement tracking",
-      "Email reminders",
-      "Mobile app access"
-    ],
-    cta: "Get Started Free",
-    popular: false
-  },
-  {
-    name: "Pro",
-    price: "$4.99",
-    period: "per month",
-    description: "For active expense sharers",
-    features: [
-      "Unlimited groups",
-      "AI spending insights", 
-      "Advanced splitting options",
-      "Priority support",
-      "Export data",
-      "Custom categories"
-    ],
-    cta: "Choose Pro",
-    popular: true
-  },
-  {
-    name: "Business",
-    price: "$12.99", 
-    period: "per month",
-    description: "For teams and organizations",
-    features: [
-      "Team management",
-      "Bulk settlements",
-      "Advanced reporting",
-      "API access",
-      "White-label options",
-      "Dedicated support"
-    ],
-    cta: "Choose Business",
-    popular: false
-  }
-];
-
-// FAQ data
-const FAQ_ITEMS = [
-  {
-    question: "Is Mydues really free?",
-    answer: "Yes! Our free plan includes up to 3 groups and all basic splitting features. You can upgrade anytime for more advanced features."
-  },
-  {
-    question: "How do I settle debts with friends?",
-    answer: "Mydues tracks all balances automatically. When it's time to settle up, you'll see exactly who owes what. We send gentle reminders but you handle payments however you prefer."
-  },
-  {
-    question: "Can I use Mydues offline?",
-    answer: "While you need internet to sync data, you can view your expenses and balances offline. Any changes you make will sync when you're back online."
-  },
-  {
-    question: "How secure is my financial data?",
-    answer: "We use bank-level encryption and Clerk authentication. We never store payment information - we only track who owes what, not how they pay."
-  },
-  {
-    question: "What happens if I cancel my subscription?",
-    answer: "You can always downgrade to our free plan. Your data stays safe, you just lose access to premium features like AI insights and unlimited groups."
-  }
-];
+import { TESTIMONIALS, FEATURES, STEPS, PRICING_PLANS, FAQ_ITEMS } from "@/lib/landing";
 
 export default function Home() {
   return (
@@ -388,8 +249,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gradient-to-br from-purple-50 to-blue-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center space-y-6 mb-16">
+            <Badge variant="outline" className="bg-white/80 text-purple-700 border-purple-200">
+              Testimonials
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                What our users
+              </span>
+              <br />
+              <span className="text-gray-800">are saying</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Real stories from real users who love splitting expenses with Mydues.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {TESTIMONIALS.map((testimonial, index) => (
+              <Card
+                key={index}
+                className="p-8 bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-2xl transition-all duration-300 hover:-translate-y-2 text-center"
+              >
+                <div className="space-y-6">
+                  <div className="flex justify-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  
+                  <blockquote className="text-gray-700 italic text-lg leading-relaxed">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  
+                  <div className="flex flex-col items-center space-y-3">
+                    <div className="w-16 h-16 rounded-full overflow-hidden">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-800">{testimonial.name}</h4>
+                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
-      <section id="faq" className="py-20 bg-gradient-to-br from-purple-50 to-blue-50">
+      <section id="faq" className="py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center space-y-6 mb-16">
             <Badge variant="outline" className="bg-white/80 text-purple-700 border-purple-200">
