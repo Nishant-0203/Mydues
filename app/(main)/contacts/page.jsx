@@ -47,80 +47,53 @@ export default function ContactsPage() {
   const { contacts: users = [], groups = [] } = data || {};
 
   return (
-    <div className="container mx-auto py-6">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-6">
-        <h1 className="text-5xl gradient-title">Contacts</h1>
-        <Button onClick={() => setIsCreateGroupModalOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Create Group
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Individual Contacts */}
-        <div>
-          <h2 className="text-xl font-bold mb-4 flex items-center">
-            <User className="mr-2 h-5 w-5" />
-            People
-          </h2>
-          {users.length === 0 ? (
-            <Card>
-              <CardContent className="py-6 text-center text-muted-foreground">
-                No contacts yet. Add an expense with someone to see them here.
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="flex flex-col gap-4">
-              {users.map((user) => (
-                <Link key={user.id} href={`/person/${user.id}`}>
-                  <Card className="hover:bg-muted/30 transition-colors cursor-pointer">
-                    <CardContent className="py-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-10 w-10">
-                            <AvatarImage src={user.imageUrl} />
-                            <AvatarFallback>
-                              {user.name.charAt(0)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{user.name}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {user.email}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+      <div className="container mx-auto py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-6">
+          <h1 className="text-5xl font-bold">
+            <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Contacts
+            </span>
+          </h1>
+          <Button onClick={() => setIsCreateGroupModalOpen(true)} className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none rounded-2xl px-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
+            <Plus className="mr-2 h-4 w-4" />
+            Create Group
+          </Button>
         </div>
 
-        {/* Groups */}
-        <div>
-          <h2 className="text-xl font-bold mb-4 flex items-center">
-            <Users className="mr-2 h-5 w-5" />
-            Groups
-          </h2>
-          {groups.length === 0 ? (
-            <Card>
-              <CardContent className="py-6 text-center text-muted-foreground">
-                No groups yet. Create a group to start tracking shared expenses.
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="flex flex-col gap-4">
-              {groups.map((group) => (
-                <Link key={group.id} href={`/groups/${group.id}`}>
-                  <Card className="hover:bg-muted/30 transition-colors cursor-pointer">
-                    <CardContent className="py-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="bg-primary/10 p-2 rounded-md">
-                            <Users className="h-6 w-6 text-primary" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Individual Contacts */}
+          <div>
+            <h2 className="text-xl font-bold mb-4 flex items-center">
+              <User className="mr-2 h-5 w-5" />
+              People
+            </h2>
+            {users.length === 0 ? (
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-2xl">
+                <CardContent className="py-6 text-center text-muted-foreground">
+                  No contacts yet. Add an expense with someone to see them here.
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {users.map((user) => (
+                  <Link key={user.id} href={`/person/${user.id}`}>
+                    <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                      <CardContent className="py-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-10 w-10">
+                              <AvatarImage src={user.imageUrl} />
+                              <AvatarFallback>
+                                {user.name.charAt(0)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium">{user.name}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {user.email}
+                              </p>
+                            </div>
                           </div>
                           <div>
                             <p className="font-medium">{group.name}</p>
@@ -129,23 +102,62 @@ export default function ContactsPage() {
                             </p>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
 
-      <CreateGroupModal
-        isOpen={isCreateGroupModalOpen}
-        onClose={() => setIsCreateGroupModalOpen(false)}
-        onSuccess={(groupId) => {
-          router.push(`/groups/${groupId}`);
-        }}
-      />
+          {/* Groups */}
+          <div>
+            <h2 className="text-xl font-bold mb-4 flex items-center">
+              <Users className="mr-2 h-5 w-5" />
+              Groups
+            </h2>
+            {groups.length === 0 ? (
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-2xl">
+                <CardContent className="py-6 text-center text-muted-foreground">
+                  No groups yet. Create a group to start tracking shared expenses.
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {groups.map((group) => (
+                  <Link key={group.id} href={`/groups/${group.id}`}>
+                    <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                      <CardContent className="py-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="bg-primary/10 p-2 rounded-md">
+                              <Users className="h-6 w-6 text-primary" />
+                            </div>
+                            <div>
+                              <p className="font-medium">{group.name}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {group.memberCount} members
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <CreateGroupModal
+          isOpen={isCreateGroupModalOpen}
+          onClose={() => setIsCreateGroupModalOpen(false)}
+          onSuccess={(groupId) => {
+            router.push(`/groups/${groupId}`);
+          }}
+        />
+      </div>
     </div>
   );
 }

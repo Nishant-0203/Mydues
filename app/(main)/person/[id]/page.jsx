@@ -38,111 +38,117 @@ export default function PersonExpensesPage() {
   const balance = data?.balance || 0;
 
   return (
-    <div className="container mx-auto py-6 max-w-4xl">
-      <div className="mb-6">
-        <Button
-          variant="outline"
-          size="sm"
-          className="mb-4"
-          onClick={() => router.back()}
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+      <div className="container mx-auto py-6 max-w-4xl">
+        <div className="mb-6">
+          <Button
+            variant="outline"
+            size="sm"
+            className="mb-4"
+            onClick={() => router.back()}
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Button>
 
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={otherUser?.imageUrl} />
-              <AvatarFallback>
-                {otherUser?.name?.charAt(0) || "?"}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h1 className="text-4xl gradient-title">{otherUser?.name}</h1>
-              <p className="text-muted-foreground">{otherUser?.email}</p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={otherUser?.imageUrl} />
+                <AvatarFallback>
+                  {otherUser?.name?.charAt(0) || "?"}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h1 className="text-4xl font-bold">
+                  <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    {otherUser?.name}
+                  </span>
+                </h1>
+                <p className="text-muted-foreground">{otherUser?.email}</p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex gap-2">
-            <Button asChild variant="outline">
-              <Link href={`/settlements/user/${params.id}`}>
-                <ArrowLeftRight className="mr-2 h-4 w-4" />
-                Settle up
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link href={`/expenses/new`}>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add expense
-              </Link>
-            </Button>
+            <div className="flex gap-2">
+              <Button asChild variant="outline" className="border-2 border-purple-200 text-purple-600 hover:bg-purple-50 rounded-2xl hover:border-purple-300 transition-all duration-200">
+                <Link href={`/settlements/user/${params.id}`}>
+                  <ArrowLeftRight className="mr-2 h-4 w-4" />
+                  Settle up
+                </Link>
+              </Button>
+              <Button asChild className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none rounded-2xl px-6 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
+                <Link href={`/expenses/new`}>
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Add expense
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
+
+        {/* Balance card */}
+        <Card className="mb-6 bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-2xl transition-all duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-xl">Balance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-between items-center">
+              <div>
+                {balance === 0 ? (
+                  <p>You are all settled up</p>
+                ) : balance > 0 ? (
+                  <p>
+                    <span className="font-medium">{otherUser?.name}</span> owes
+                    you
+                  </p>
+                ) : (
+                  <p>
+                    You owe <span className="font-medium">{otherUser?.name}</span>
+                  </p>
+                )}
+              </div>
+              <div
+                className={`text-2xl font-bold ${balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""}`}
+              >
+                ${Math.abs(balance).toFixed(2)}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tabs for expenses and settlements */}
+        <Tabs
+          defaultValue="expenses"
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-4"
+        >
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="expenses">
+              Expenses ({expenses.length})
+            </TabsTrigger>
+            <TabsTrigger value="settlements">
+              Settlements ({settlements.length})
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="expenses" className="space-y-4">
+            <ExpenseList
+              expenses={expenses}
+              showOtherPerson={false}
+              otherPersonId={params.id}
+              userLookupMap={{ [otherUser.id]: otherUser }}
+            />
+          </TabsContent>
+
+          <TabsContent value="settlements" className="space-y-4">
+            <SettlementList
+              settlements={settlements}
+              userLookupMap={{ [otherUser.id]: otherUser }}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
-
-      {/* Balance card */}
-      <Card className="mb-6">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-xl">Balance</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex justify-between items-center">
-            <div>
-              {balance === 0 ? (
-                <p>You are all settled up</p>
-              ) : balance > 0 ? (
-                <p>
-                  <span className="font-medium">{otherUser?.name}</span> owes
-                  you
-                </p>
-              ) : (
-                <p>
-                  You owe <span className="font-medium">{otherUser?.name}</span>
-                </p>
-              )}
-            </div>
-            <div
-              className={`text-2xl font-bold ${balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""}`}
-            >
-              ${Math.abs(balance).toFixed(2)}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Tabs for expenses and settlements */}
-      <Tabs
-        defaultValue="expenses"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="space-y-4"
-      >
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="expenses">
-            Expenses ({expenses.length})
-          </TabsTrigger>
-          <TabsTrigger value="settlements">
-            Settlements ({settlements.length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="expenses" className="space-y-4">
-          <ExpenseList
-            expenses={expenses}
-            showOtherPerson={false}
-            otherPersonId={params.id}
-            userLookupMap={{ [otherUser.id]: otherUser }}
-          />
-        </TabsContent>
-
-        <TabsContent value="settlements" className="space-y-4">
-          <SettlementList
-            settlements={settlements}
-            userLookupMap={{ [otherUser.id]: otherUser }}
-          />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }
