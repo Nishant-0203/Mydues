@@ -48,7 +48,7 @@ export default function ContactsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
-      <div className="container mx-auto py-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-6">
           <h1 className="text-5xl font-bold">
             <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -80,25 +80,17 @@ export default function ContactsPage() {
                   <Link key={user.id} href={`/person/${user.id}`}>
                     <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
                       <CardContent className="py-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <Avatar className="h-10 w-10">
-                              <AvatarImage src={user.imageUrl} />
-                              <AvatarFallback>
-                                {user.name.charAt(0)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <p className="font-medium">{user.name}</p>
-                              <p className="text-sm text-muted-foreground">
-                                {user.email}
-                              </p>
-                            </div>
-                          </div>
+                        <div className="flex items-center gap-3">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={user.imageUrl} />
+                            <AvatarFallback>
+                              {user.name.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
                           <div>
-                            <p className="font-medium">{group.name}</p>
+                            <p className="font-medium">{user.name}</p>
                             <p className="text-sm text-muted-foreground">
-                              {group.memberCount} members
+                              {user.email}
                             </p>
                           </div>
                         </div>

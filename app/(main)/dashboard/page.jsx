@@ -40,15 +40,15 @@ export default function Dashboard() {
     monthlySpendingLoading;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
-      <div className="container mx-auto py-6 space-y-6">
+    <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-1 space-y-2">
         {isLoading ? (
           <div className="w-full py-12 flex justify-center">
             <BarLoader width={"100%"} color="#36d7b7" />
           </div>
         ) : (
           <>
-            <div className="flex  justify-between flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex justify-between flex-col sm:flex-row sm:items-center gap-4">
               <h1 className="text-5xl font-bold">
                 <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Dashboard
@@ -139,9 +139,9 @@ export default function Dashboard() {
             </div>
 
             {/* Main dashboard content */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               {/* Left column */}
-              <div className="lg:col-span-2 space-y-6">
+              <div className="lg:col-span-2 space-y-4">
                 {/* Expense summary */}
                 <ExpenseSummary
                   monthlySpending={monthlySpending}
@@ -150,7 +150,7 @@ export default function Dashboard() {
               </div>
 
               {/* Right column */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Balance details */}
                 <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl rounded-2xl transition-all duration-300">
                   <CardHeader className="pb-3">
