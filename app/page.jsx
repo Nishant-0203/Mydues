@@ -353,7 +353,7 @@ export default function Home() {
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <Image
-                  src="/logos/logo-s.png"
+                  src="/logos/logo45.png"
                   alt="MyDues Logo"
                   width={48}
                   height={48}
